@@ -7,8 +7,12 @@ pool:
 variables:
   phpVersion: 7.4
 
-steps:
+  files:
+  - source: /
+    destination: /var/www/html
+file_exists_behavior: OVERWRITE
 
+steps:
 - task: ArchiveFiles@2
   displayName: Zip files
   inputs:
