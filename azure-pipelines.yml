@@ -13,18 +13,19 @@ variables:
   phpVersion: 7.2
 
 steps:
-- task: PowerShell@1
-  displayName: Build
+- task: ArchiveFiles@2
+  displayName: Zip files
   inputs:
-    projects: '$(Parameters.RestoreBuildProjects)'
-    arguments: '--configuration $(BuildConfiguration)'
-    steps:
-- task: DotNetCoreCLI@2
-  displayName: Publish
+    rootFolderOrFile: '$(system.defaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/backend.zip'
+    replaceExistingArchive: true
+
+- task: PublishPipelineArtifact@1
+  displayName: Publish zip file
   inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-    zipAfterPublish: True
+    artifactName: drop
+    targetPath: '$(Build.ArtifactStagingDirectory)'
 
 
