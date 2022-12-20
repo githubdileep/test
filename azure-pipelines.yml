@@ -7,10 +7,6 @@ pool:
 variables:
   phpVersion: 7.4
 
-  files:
-    destination: /var/www/html
-
-
 steps:
 - task: ArchiveFiles@2
   displayName: Zip files
