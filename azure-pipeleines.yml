@@ -1,0 +1,25 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  phpVersion: 7.4
+
+steps:
+
+- task: ArchiveFiles@2
+  displayName: Zip files
+  inputs:
+    rootFolderOrFile: '$(system.defaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/backend.zip'
+    replaceExistingArchive: true
+
+- task: PublishPipelineArtifact@1
+  displayName: Publish zip file
+  inputs:
+    artifactName: drop
+    targetPath: '$(Build.ArtifactStagingDirectory)'
